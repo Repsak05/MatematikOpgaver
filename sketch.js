@@ -1,6 +1,11 @@
+//////////////////////////////////
+//MOVE BACKARDS TO SEE THE PLANE//
+//////////////////////////////////
+
+
 //Variables for movement
 let moveSpeed = 15;
-let rotSpeed = 5;
+let rotSpeed = 3;
 let camX = 0;
 let camY = 0;
 let camZ = 0;
@@ -8,23 +13,36 @@ let angleX = 0;
 let angleY = 0;
 
 //Parameterfremstilling af et plan
-let punkt1 = [2,-4,-2];
-let punkt2 = [-2,3,4];
-let punkt3 = [13,4,-2];
+let punkt1 = [5,-4,-2];
+let punkt2 = [2,3,4];
+let punkt3 = [1,4,-2];
 let skalar1 = 6;
 let skalar2 = 2;
 let sphereSize = 20;
+
+//Slider
+let slider1;
+let slider2;
 
 function setup() 
 {
   createCanvas(400, 400, WEBGL);
   angleMode(DEGREES);
+  slider1 = createSlider(0, 360, 60, 40);
+  slider1.position(10, 10);
+  slider1.style('width', '80px');
+
+  slider2 = createSlider(0, 360, 60, 40);
+  slider2.position(10, 40);
+  slider2.style('width', '80px');
 }
 
 function draw() 
 {
   background(220);
   Parameterfremstilling(punkt1,punkt2,punkt3,skalar1,skalar2);
+
+  //Movement
   WASD(); //Move with WASD
   Rotate(); //Rotate with arrow
   UpDown(); //Go up and down with shift and space
@@ -37,10 +55,14 @@ function draw()
 
 function Parameterfremstilling(p1, p2,p3,s1,s2)
 {
-  for(let j = 1; j<100;j+=sphereSize/2)
+  let val1 = slider1.value();
+  let val2 =slider2.value();
+
+
+  for(let j = 0; j<val1;j+=sphereSize/2)
   {
     s1 = j;
-    for(let k = 1; k<100;k+=sphereSize/2)
+    for(let k = 1; k<val2;k+=sphereSize/2)
     {
       s2 = k;
 
@@ -61,7 +83,8 @@ function Parameterfremstilling(p1, p2,p3,s1,s2)
                     ];
 
       push();
-      translate(TranslateValue[0],TranslateValue[1],TranslateValue[2]);
+
+      translate(TranslateValue[0],TranslateValue[1],TranslateValue[2]-100);
       sphere(sphereSize);
       pop();
     }
